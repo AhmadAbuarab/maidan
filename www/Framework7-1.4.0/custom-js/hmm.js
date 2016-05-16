@@ -25,6 +25,7 @@
             this.services.loginData.method = "GET";
             this.services.loginData.template='{"UserName":<param::userName>}';
             this.services.loginData.getResult = function (data) {
+                localStorage.setItem('logInSuccess',1);
                 return data['ns:UserId'];
             };
             
@@ -45,7 +46,15 @@
             this.services.listConditions.method = "GET";
             this.services.listConditions.template = "{ActionId:<param::actionId>}";
             this.services.listConditions.getResult = function (data) {
-                return {'request':data['ListOfHmm_Maidan_Mobile_Action_Conditions']['HmmActionMobile'],'result':data['ListOfHmm_Maidan_Mobile_Action_Conditions']['HmmActionMobile']['ListOfHmmMaidanActivitiesCond']['HmmMaidanActivitiesCond']};
+                if(data['ListOfHmm_Maidan_Mobile_Action_Conditions']['HmmActionMobile'] != null){
+                var conditions = data['ListOfHmm_Maidan_Mobile_Action_Conditions']['HmmActionMobile']['ListOfHmmMaidanActivitiesCond'];
+                if(conditions == null){
+                    return null;
+                    // alert(1);
+                }else{
+                    return {'request':data['ListOfHmm_Maidan_Mobile_Action_Conditions']['HmmActionMobile'],'result':data['ListOfHmm_Maidan_Mobile_Action_Conditions']['HmmActionMobile']['ListOfHmmMaidanActivitiesCond']['HmmMaidanActivitiesCond']};
+                }
+               } 
             };
             
             
